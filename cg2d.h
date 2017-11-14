@@ -1,4 +1,3 @@
-
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,8 +9,8 @@
 #define PI 3.1415926535
 
 /* Exemplo de estruturas de dados para a 
-   biblioteca de funÃ§Ãµes grÃ¡ficas em C, considerando 
-   o plano como referÃªncia para o mundo */
+   biblioteca de funções gráficas em C, considerando 
+   o plano como referência para o mundo */
 
 float XWMax, XWMin, YWMax, YWMin;
 
@@ -95,26 +94,26 @@ point * SetPoint(float, float, int);
 object * CreateObject(int);
 int SetObject(point *, object *);
 
-/* sistemas de referÃªncias */
+/* sistemas de referências */
 window * CreateWindow(float, float, float, float);
 point * Sru2Srn(point *, window *);
 bufferdevice * CreateBuffer(int, int);
 point * Srn2Srd(point *, bufferdevice *);
 
-/* funÃ§Ãµes para criar e gerenciar uma 
+/* funções para criar e gerenciar uma 
    paleta e cores */
 palette * CreatePalette(int);
 int SetColor(float, float, float, palette *);
 ColorValues * GetColor(int, palette *);
 object * ChangeColor(object *, int);
 
-/* funÃ§Ãµes para conversÃ£o matricial 
+/* funções para conversão matricial 
    e preenchimento de objetos */
 int DrawLine(point *, point *, window *, bufferdevice *, int);
 int DrawObject(object *, window *, bufferdevice *);
 int Fill(object *, window *, bufferdevice *, int);
 
-/* operaÃ§Ãµes com objetos no mundo */
+/* operações com objetos no mundo */
 object * Rotate(object *, float);
 object * Translate(object *, float, float);
 object * Scale(object *, float, float);
@@ -126,5 +125,3 @@ hmatrix * SetSftMatrix(float, float);
 
 /* visualiza o buffer (SRD) no monitor virtual */
 int Dump2X(bufferdevice *, palette *);
-
-

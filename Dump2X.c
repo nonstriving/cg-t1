@@ -1,3 +1,4 @@
+#include "cg2d.h" //edit 
 
 int DumpX(bufferdevice * dev, palette * pal) {
   Display               * display;
