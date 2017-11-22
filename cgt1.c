@@ -142,8 +142,23 @@ int DrawObject(object * obj, window * w, bufferdevice * bufferd){
 		DrawLine(obj->points[i], obj->points[i + 1], w, bufferd, DEFAULT_COLOR);}
 	return EXIT_SUCCESS;}
 				
-int Fill(object * obj, window * w, bufferdevice * bd, int color_code){ // not sure about what the int should be
+int Fill(object * obj, window * w, bufferdevice * bufferd, int color_code){ // not sure about what the int should be
+	int i, j, k;
+	point * line_start, line_end;
+	for(i = 0; i < w->xmax; i++){
+		j = 0;
+		while(j++ < w->ymax){
+			if(bufferd->[i][j] == DEFAULT_COLOR){
+				line_start->x = i;
+				line_start->y = j;
+				line_end->x = i;
+				while(bufferd->[i][++j] != DEFAULT_COLOR){
+				}
+				line_end->y = j;}}
+		DrawLine(line_start, line_end, w, bufferd, color_code);}
 	
+	return EXIT_SUCCESS;}
+			
 // operacoes com objetos no mundo 
 object * Rotate(object * obj, float ){
 
