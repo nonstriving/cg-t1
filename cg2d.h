@@ -65,7 +65,7 @@ typedef struct Palette palette;
 struct Buffer {
   int MaxX,
       MaxY;
-  int * buffer;
+  int ** buffer; //int * buffer;
   };
 
 typedef struct Buffer bufferdevice;
