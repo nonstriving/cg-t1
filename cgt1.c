@@ -145,10 +145,11 @@ int DrawObject(object * obj, window * w, bufferdevice * bufferd){
 int Fill(object * obj, window * w, bufferdevice * bufferd, int color_code){ // not sure about what the int should be
 	int i, j, k;
 	point * line_start, line_end;
+	DrawObject(obj, w, bufferd);
 	for(i = 0; i < w->xmax; i++){
 		j = 0;
 		while(j++ < w->ymax){
-			if(bufferd->[i][j] == DEFAULT_COLOR){
+			if(bufferd->[i][j] == DEFAULT_COLOR){ // where the object starts 
 				line_start->x = i;
 				line_start->y = j;
 				line_end->x = i;
@@ -160,10 +161,29 @@ int Fill(object * obj, window * w, bufferdevice * bufferd, int color_code){ // n
 	return EXIT_SUCCESS;}
 			
 // operacoes com objetos no mundo 
-object * Rotate(object * obj, float ){
-
-object * Translate(object *, float, float){
-
+object * Rotate(object * obj, float theta){
+	int i;
+	float x, y, x_new, y_new;
+	for(i = 0; i < obj->numbers_of_points; i++){
+		x = obj->points[i].x;
+		y = obj->points[i].y;
+		x_new = x * cos(theta) - y * sin(theta);
+		y_new = y * cos(theta) + x * sin(theta);
+		obj->points[i].x = x_new;
+		obj->points[i].y = y_new;}
+	return EXIT_SUCCESS;} 
+	
+object * Translate(object * obj, float dx, float dy){
+	int i;
+	float x;
+	float y;
+	for(i = 0; i < obj->numbers_of_points; i++){
+		x = obj->points[i].x;
+		y = obj->points[i].y;
+		obj->points[i].x = x + dx;
+		obj-points[i].y = y + dy;}
+	return EXIT_SUCCESS;}
+	
 object * Scale(object *, float, float){
 
 hpoint * LinearTransf(hmatrix *, hmatrix *){
