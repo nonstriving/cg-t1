@@ -104,7 +104,7 @@ object * ChangeColor(object * obj, int color_code){
 	for(i = 0; i < obj->numbers_of_points; i++){
 		p = &obj->points[i];
 		q = SetPoint(p->x, p->y, color_code);
-		obj->points[i] = q;}
+		obj->points[i] = *q;}
 	return obj;}
 
 // funcoes para conversao matricial e preenchimento de objetos
@@ -324,5 +324,14 @@ int main(){
 	
 	SetWorld(10, -20, 15, -20);
 	
-	// SRD
+	window * w = CreateWindow(-8, 5, -7, 5);
+	bufferdevice * bufferd = CreateBuffer(640, 480);
+	
+	palette * pal;
+	pal = CreatePalette(1);
+	SetColor(0, 0, 0, pal);
+	
+	// teste
+	DrawLine(p1, p2, w, bufferd, 0);
+
 	return 0;}
