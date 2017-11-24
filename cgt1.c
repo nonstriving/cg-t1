@@ -81,14 +81,16 @@ point * Srn2Srd(point * p, bufferdevice * bufferd){
 /* criar e gerenciar uma paleta de cores */
 
 palette * CreatePalette(int number_of_colors){
-	palette * pal = malloc(sizeof(palette));
+	palette * pal; // = (palette*) malloc(sizeof(int) + sizeof(ColorValues) * number_of_colors);
+	pal->colors = (ColorValues*) malloc(sizeof(ColorValues) * number_of_colors);
 	pal->numbers_of_colors = number_of_colors;
 	
 	return pal;}
 
 int SetColor(float red, float green, float blue, palette * pal){
 	static int i = 0; // how many colors have been added so far
-	pal->colors[i++] = (struct Color) {red, green, blue};
+	if(i < pal->numbers_of_colors){
+		pal->colors[i++] = (struct Color) {red, green, blue};}
 	return i;} /* returns how many colors have been added so far */
 
 ColorValues * GetColor(int color_code, palette * pal){
@@ -315,12 +317,8 @@ hmatrix * SetSftMatrix(float Dx, float Dy){
 
 
 int main(){	
-	object * obj = CreateObject(3);
 	point * p1 = SetPoint(0, 0, 0);
 	point * p2 = SetPoint(1, 1, 0);
-
-	printf("%d\n", SetObject(p1, obj));
-	printf("%d\n", SetObject(p2, obj));
 	
 	SetWorld(10, -20, 15, -20);
 	
@@ -332,6 +330,11 @@ int main(){
 	SetColor(0, 0, 0, pal);
 	
 	// teste
-	DrawLine(p1, p2, w, bufferd, 0);
-
+	DrawLine(p1, p2, w, bufferd, 0); // "segmentation fault: 11" here
+	
+	free(p1);
+	free(p2);
+	free(w);
+	free(bufferd);
+	free(pal->colors);
 	return 0;}
