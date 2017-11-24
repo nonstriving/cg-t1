@@ -97,13 +97,22 @@ ColorValues * GetColor(int color_code, palette * pal){
 	return c;}
 
 object * ChangeColor(object * obj, int color_code){
-	// change the object's color
+	int i;
+	point * p;
+	point * q;
+	
+	for(i = 0; i < obj->numbers_of_points; i++){
+		p = &obj->points[i];
+		q = SetPoint(p->x, p->y, color_code);
+		obj->points[i] = q;}
 	return obj;}
 
 // funcoes para conversao matricial e preenchimento de objetos
  
+// checar apostila
 int DrawLine(point * p, point * q, window * w, bufferdevice * bufferd, int color_code){ // not sure about what the int should be
 	// either of the points is outside of the window
+	// mudar p/ desenhar o que esta dentro da janela mesmo q parte da linha n esteja 
 	if(p->x < w->xmin || p->x > w->xmax){
 		exit(EXIT_FAILURE);}
 	else if(p->y < w->ymin || p->y > w->ymax){
@@ -134,14 +143,16 @@ int DrawLine(point * p, point * q, window * w, bufferdevice * bufferd, int color
 				i = i + 1;
 				e = e + m;}}}
 		return EXIT_SUCCESS;}	
-					
+
+// checar apostila					
 int DrawObject(object * obj, window * w, bufferdevice * bufferd){
 	int i;
 	int n = obj->numbers_of_points;
 	for(i = 0; i < (n - 1); i++){
 		DrawLine(&obj->points[i], &obj->points[i + 1], w, bufferd, DEFAULT_COLOR);}
 	return EXIT_SUCCESS;}
-				
+
+// checar apostila				
 int Fill(object * obj, window * w, bufferdevice * bufferd, int color_code){ // not sure about what the int should be
 	int i, j, k;
 	point line_start, line_end;
@@ -311,4 +322,7 @@ int main(){
 	printf("%d\n", SetObject(p1, obj));
 	printf("%d\n", SetObject(p2, obj));
 	
+	SetWorld(10, -20, 15, -20);
+	
+	// SRD
 	return 0;}
