@@ -124,4 +124,4 @@ hmatrix * SetSclMatrix(float, float);
 hmatrix * SetSftMatrix(float, float);
 
 /* visualiza o buffer (SRD) no monitor virtual */
-int Dump2X(bufferdevice *, palette *);
+int DumpX(bufferdevice *, palette *); // Dump2X
