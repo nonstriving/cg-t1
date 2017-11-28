@@ -62,6 +62,9 @@ bufferdevice * CreateBuffer(int maxx, int maxy){
 	bufferdevice * bufferd = malloc(sizeof(bufferdevice));
 	bufferd->MaxX = maxx;
 	bufferd->MaxY = maxy;
+	bufferd->buffer = NULL;
+	int * b = malloc(sizeof(int) * maxx * maxy);
+	bufferd->buffer = &b[0];
 
 	return bufferd;}
 
@@ -124,7 +127,26 @@ int DrawLine(point * p, point * q, window * w, bufferdevice * bufferd, int color
 	else if(q->y < w->ymin || q->y > w->ymax){
 		exit(EXIT_FAILURE);}
 	else{
-		float deltax = q->x - p->x;
+		int x, y;
+		
+		point * r;
+		r = Sru2Srn(p, w);
+		r = Srn2Srd(p, bufferd);
+
+		point * s;
+		s  = Sru2Srn(q, w);
+		s = Srn2Srd(q, bufferd);	
+		
+		float a = (s->y - r->y)/(s->x - r->x);
+
+		for(x = r->x; x <= s->x; x++){
+			// arrendonda y
+			y = (r->y + a * (x - r->x));
+			bufferd->buffer[x + y * bufferd->MaxY] = color_code; // segmentation fault: 11 error here
+		}
+
+		return EXIT_SUCCESS;}}		
+		/*float deltax = q->x - p->x;
 		float deltay = q->y - p->y;
 		int m;
 		int e;
@@ -144,10 +166,10 @@ int DrawLine(point * p, point * q, window * w, bufferdevice * bufferd, int color
 					}
 				i = i + 1;
 				e = e + m;}}}
-		return EXIT_SUCCESS;}	
+		return EXIT_SUCCESS;}*/	
 
 // checar apostila					
-int DrawObject(object * obj, window * w, bufferdevice * bufferd){
+/*int DrawObject(object * obj, window * w, bufferdevice * bufferd){
 	int i;
 	int n = obj->numbers_of_points;
 	for(i = 0; i < (n - 1); i++){
@@ -162,17 +184,18 @@ int Fill(object * obj, window * w, bufferdevice * bufferd, int color_code){ // n
 	for(i = 0; i < w->xmax; i++){
 		j = 0;
 		while(j++ < w->ymax){
-			if(bufferd->buffer[i][j] == DEFAULT_COLOR){ // where the object starts 
+			if(bufferd->buffer[j * bufferd->MaxY + i] == DEFAULT_COLOR){ // where the object starts 
 				line_start.x = i;
 				line_start.y = j;
 				line_end.x = i;
-				while(bufferd->buffer[i][++j] != DEFAULT_COLOR){
+				j++;
+				while(bufferd->buffer[j * bufferd->MaxY + i] != DEFAULT_COLOR){
 				}
 				line_end.y = j;}}
 		DrawLine(&line_start, &line_end, w, bufferd, color_code);}
 	
 	return EXIT_SUCCESS;}
-			
+		*/	
 // operacoes com objetos no mundo 
 object * Rotate(object * obj, float theta){
 	int i;
@@ -335,6 +358,9 @@ int main(){
 	free(p1);
 	free(p2);
 	free(w);
+	//free(bufferd->buffer);
 	free(bufferd);
 	free(pal->colors);
+
+	Dump2X(bufferd, pal);
 	return 0;}
