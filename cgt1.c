@@ -70,7 +70,7 @@ void SetWorld(float xmax, float  xmin, float  ymax, float ymin){
 
 /* cria pontos e objetos no mundo */
 point * SetPoint(float x, float y, int color){
-	point * p = malloc(sizeof(point));
+	point * p = (point*) malloc(sizeof(point));
 	p->x = x;
 	p->y = y;
 	p->color = color;
@@ -78,11 +78,11 @@ point * SetPoint(float x, float y, int color){
 	return p;}
 
 object * CreateObject(int n){
-	object * obj = malloc(sizeof(object));
+	object * obj = (object*) malloc(sizeof(object));
 	obj->numbers_of_points = n;
 	obj->points = NULL;
 	
-	point * ObjPoints = malloc(n*sizeof(point));
+	point * ObjPoints = (point*) malloc(n*sizeof(point));
 	obj->points = &ObjPoints[0];
 
 	return obj;}
@@ -95,7 +95,7 @@ int SetObject(point * p, object * obj){
 
 /* sistemas de referencias */
 window * CreateWindow(float xmin, float xmax, float ymin, float ymax){
-	window * win = malloc(sizeof(window));
+	window * win = (window*) malloc(sizeof(window));
 	win->xmin = xmin;
 	win->xmax = xmax;
 	win->ymin = ymin;
@@ -119,11 +119,11 @@ point * Sru2Srn(point * p, window * win){
 	return p;}
 	
 bufferdevice * CreateBuffer(int maxx, int maxy){
-	bufferdevice * bufferd = malloc(sizeof(bufferdevice));
+	bufferdevice * bufferd = (bufferdevice*) malloc(sizeof(bufferdevice));
 	bufferd->MaxX = maxx;
 	bufferd->MaxY = maxy;
 	bufferd->buffer = NULL;
-	int * b = malloc(sizeof(int) * maxx * maxy);
+	int * b = (int*) malloc(sizeof(int) * maxx * maxy);
 	bufferd->buffer = &b[0];
 
 	return bufferd;}
@@ -144,7 +144,7 @@ point * Srn2Srd(point * p, bufferdevice * bufferd){
 /* criar e gerenciar uma paleta de cores */
 
 palette * CreatePalette(int number_of_colors){
-	palette * pal; // = (palette*) malloc(sizeof(int) + sizeof(ColorValues) * number_of_colors);
+	palette * pal = (palette*) malloc(sizeof(palette));
 	pal->colors = (ColorValues*) malloc(sizeof(ColorValues) * number_of_colors);
 	pal->numbers_of_colors = number_of_colors;
 	
@@ -288,7 +288,7 @@ object * Scale(object * obj, float sx, float sy){
 		x = obj->points[i].x;
 		y = obj->points[i].y;
 		obj->points[i].x = x * sx;
-		obj->points[i].y = x * sy;}
+		obj->points[i].y = y * sy;}
 	return obj;}
 	
 hpoint * LinearTransf(hmatrix * m, hpoint * p){
@@ -302,7 +302,7 @@ hpoint * LinearTransf(hmatrix * m, hpoint * p){
 	return p;}
 
 hmatrix * ComposeMatrix(hmatrix * m, hmatrix * n){
-	hmatrix * A;
+	hmatrix * A = (hmatrix*) malloc(sizeof(hmatrix));
 	
 	float a11, a12, a13;
 	float a21, a22, a23;
@@ -351,7 +351,7 @@ hmatrix * ComposeMatrix(hmatrix * m, hmatrix * n){
 	return A;}
 
 hmatrix * SetRotMatrix(float theta){
-	hmatrix * A;
+	hmatrix * A = (hmatrix*) malloc(sizeof(hmatrix));
 	A->a11 = cos(theta);
 	A->a12 = -sin(theta);
 	A->a21 = sin(theta);
@@ -365,7 +365,7 @@ hmatrix * SetRotMatrix(float theta){
 	return A;}
 
 hmatrix * SetSclMatrix(float Sx, float Sy){
-	hmatrix * A;
+	hmatrix * A = (hmatrix*) malloc(sizeof(hmatrix));
 	A->a11 = Sx;
 	A->a12 = 0;
 	A->a13 = 0;
@@ -382,8 +382,8 @@ hmatrix * SetSclMatrix(float Sx, float Sy){
 
 // translacao
 hmatrix * SetSftMatrix(float Dx, float Dy){
-	hmatrix * A;
-	
+	hmatrix * A = (hmatrix*) malloc(sizeof(hmatrix));
+
 	A->a11 = 1;
 	A->a12 = 0;
 	A->a13 = Dx;
